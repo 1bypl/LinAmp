@@ -94,7 +94,7 @@ ponownie i zaznacz **„Add python.exe to PATH”**.
 3. Kliknij dwukrotnie **`run.bat`**.
 
 Przy pierwszym uruchomieniu otworzy się okno terminala, które samo pobierze
-biblioteki. Po chwili pojawi się odtwarzacz. Kolejne uruchomienia są szybsze.
+biblioteki.Po chwili pojawi się odtwarzacz. Kolejne uruchomienia są szybsze.
 
 > Jeśli Windows pokaże niebieski komunikat „Windows protected your PC”,
 > kliknij **More info → Run anyway**. To normalne dla plików .bat
