@@ -166,7 +166,7 @@ WAV. Radio wymaga połączenia z internetem. Lista stacji pochodzi z katalogu
 **Narzędzia → Język**: polski, angielski, niemiecki, francuski, hiszpański,
 rosyjski. Po zmianie języka program uruchomi się ponownie, aby zastosować nowe
 napisy.
-
+Pobierz dla Linux [Appimage](https://drive.proton.me/urls/DP73J5QMM0#aA2Skb5p5uVQ/)
 ---
 
 ## Skróty klawiszowe
