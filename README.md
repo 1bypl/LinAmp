@@ -168,7 +168,7 @@ rosyjski. Po zmianie języka program uruchomi się ponownie, aby zastosować now
 napisy.
 
 ---
-Pobierz dla Linux [Appimage](https://drive.proton.me/urls/DP73J5QMM0#aA2Skb5p5uVQ/)
+Pobierz dla Linux [Appimage](https://drive.proton.me/urls/DP73J5QMM0#aA2Skb5p5uVQ)
 ## Skróty klawiszowe
 
 | Klawisz | Działanie |
