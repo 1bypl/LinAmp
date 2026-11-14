@@ -7,7 +7,7 @@ Działa na **Linuksie** i **Windowsie**.
 Interfejs jest dostępny w językach: **polski (domyślny), angielski, niemiecki,
 francuski, hiszpański i rosyjski**.
 
-![Okno główne LinAmp](docs/okno-glowne.png)
+![Okno główne LinAmp](https://github.com/1bypl/LinAmp/blob/main/okno-glowne.png)
 
 ## Najważniejsze funkcje
 
