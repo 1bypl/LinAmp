@@ -25,7 +25,7 @@ francuski, hiszpański i rosyjski**.
 - **Zasobnik systemowy**, skróty klawiszowe i obsługa klawiszy multimedialnych.
 - **Przeciąganie i upuszczanie** plików/folderów na okno programu.
 
-![Okno radia](docs/radio.png)
+![Okno radia](https://github.com/1bypl/LinAmp/blob/main/radio.png)
 
 ---
 
