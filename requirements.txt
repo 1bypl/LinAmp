@@ -1,0 +1,6 @@
+# Biblioteki potrzebne do działania LinAmp.
+# Instalacja:  .venv/bin/pip install -r requirements.txt
+
+PySide6>=6.8      # interfejs graficzny (Qt 6) + odtwarzanie audio
+mutagen>=1.47     # odczyt tagów ID3/Vorbis/MP4 i okładek
+numpy>=1.26       # szybkie obliczenia FFT do analizatora widma

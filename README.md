@@ -36,18 +36,15 @@ francuski, hiszpański i rosyjski**.
 1. Pobierz/skopiuj plik:
    `dist/LinAmp-1.2.0-x86_64.AppImage`
 2. Nadaj prawo uruchamiania (jeśli potrzeba):
-
    ```bash
    chmod +x LinAmp-1.2.0-x86_64.AppImage
    ```
 3. Uruchom:
-
    ```bash
    ./LinAmp-1.2.0-x86_64.AppImage
    ```
 
 Jeśli system nie obsługuje FUSE/AppImage:
-
 ```bash
 ./LinAmp-1.2.0-x86_64.AppImage --appimage-extract-and-run
 ```
@@ -61,15 +58,12 @@ Potrzebujesz Pythona 3.10 lub nowszego.
 
 1. Otwórz terminal w folderze z projektem.
 2. Uruchom:
-
    ```bash
    ./run.sh
    ```
-
    Przy **pierwszym uruchomieniu** skrypt utworzy środowisko wirtualne i
    zainstaluje biblioteki (potrzebny internet, może potrwać kilka minut).
 3. Kolejne uruchomienia są szybkie:
-
    ```bash
    ./run.sh
    ```
@@ -93,13 +87,11 @@ uruchamianie” (KDE/GNOME) lub użyj wpisu w menu aplikacji.
 ### Gdy `./run.sh` nie chce się uruchomić
 
 Nadaj prawa wykonywania:
-
 ```bash
 chmod +x run.sh install-linux.sh
 ```
 
 Jeśli brakuje `venv`/`ensurepip`:
-
 - Ubuntu/Debian: `sudo apt install python3-venv`
 - Fedora: `sudo dnf install python3-pip`
 
@@ -179,31 +171,31 @@ napisy.
 
 ## Skróty klawiszowe
 
-| Klawisz            | Działanie                                    |
-| ------------------ | -------------------------------------------- |
-| `Space`            | Odtwórz / pauza                              |
-| `X` / `C`          | Odtwórz / pauza (klasycznie, jak w Winampie) |
-| `Z` / `B`          | Poprzedni / następny utwór                   |
-| `V`                | Stop                                         |
-| `←` / `→`          | Przewiń o 5 sekund                           |
-| `Shift + ←` / `→`  | Przewiń o 30 sekund                          |
-| `↑` / `↓`          | Głośność ±5%                                 |
-| `M`                | Wycisz / włącz dźwięk                        |
-| `S`                | Tryb losowy                                  |
-| `R`                | Tryb powtarzania                             |
-| `F`                | Filtruj playlistę                            |
-| `Enter`            | Odtwórz zaznaczony utwór                     |
-| `Delete`           | Usuń zaznaczone z playlisty                  |
-| `Ctrl + O`         | Otwórz pliki                                 |
-| `Ctrl + Shift + O` | Dodaj cały folder                            |
-| `Ctrl + L`         | Wczytaj playlistę (M3U/PLS)                  |
-| `Ctrl + S`         | Zapisz playlistę (M3U/PLS)                   |
-| `Ctrl + R`         | Otwórz radio internetowe                     |
-| `Ctrl + Shift + R` | Otwórz ulubione stacje radiowe               |
-| `Ctrl + E`         | Korektor graficzny                           |
-| `F8`               | Pokaż / ukryj playlistę                      |
-| `F1`               | Pomoc ze skrótami                            |
-| `Ctrl + Q`         | Zamknij program                              |
+| Klawisz | Działanie |
+|---|---|
+| `Space` | Odtwórz / pauza |
+| `X` / `C` | Odtwórz / pauza (klasycznie, jak w Winampie) |
+| `Z` / `B` | Poprzedni / następny utwór |
+| `V` | Stop |
+| `←` / `→` | Przewiń o 5 sekund |
+| `Shift + ←` / `→` | Przewiń o 30 sekund |
+| `↑` / `↓` | Głośność ±5% |
+| `M` | Wycisz / włącz dźwięk |
+| `S` | Tryb losowy |
+| `R` | Tryb powtarzania |
+| `F` | Filtruj playlistę |
+| `Enter` | Odtwórz zaznaczony utwór |
+| `Delete` | Usuń zaznaczone z playlisty |
+| `Ctrl + O` | Otwórz pliki |
+| `Ctrl + Shift + O` | Dodaj cały folder |
+| `Ctrl + L` | Wczytaj playlistę (M3U/PLS) |
+| `Ctrl + S` | Zapisz playlistę (M3U/PLS) |
+| `Ctrl + R` | Otwórz radio internetowe |
+| `Ctrl + Shift + R` | Otwórz ulubione stacje radiowe |
+| `Ctrl + E` | Korektor graficzny |
+| `F8` | Pokaż / ukryj playlistę |
+| `F1` | Pomoc ze skrótami |
+| `Ctrl + Q` | Zamknij program |
 
 ---
 
@@ -222,41 +214,34 @@ nazwy `PyAmp` są migrowane automatycznie.
 ## Rozwiązywanie problemów
 
 **Brak dźwięku**
-
 - Sprawdź głośność w programie i w systemie.
 - Naciśnij `M`, aby sprawdzić, czy dźwięk nie jest wyciszony.
 - Na Linuksie sprawdź wybrane urządzenie wyjściowe w ustawieniach dźwięku.
 
 **Radio się nie łączy lub nie gra**
-
 - Sprawdź połączenie z internetem i kliknij **Odśwież**.
 - Niektóre stacje bywają chwilowo niedostępne — spróbuj innej.
 
 **Nagrywanie zapisuje WAV zamiast MP3**
-
 - Zainstaluj `ffmpeg` w systemie (Linux: np. `sudo apt install ffmpeg` /
   `sudo dnf install ffmpeg`; Windows: dodaj `ffmpeg` do PATH). Bez FFmpeg
   nagranie jest zapisywane jako WAV.
 
 **Korektor niedostępny**
-
 - Korektor wymaga działającego urządzenia wyjściowego audio w systemie. Jeśli
   nie można go włączyć, odtwarzanie będzie działać normalnie bez korektora.
 
 **Ikona w menu lub na pulpicie nie uruchamia programu (Linux)**
-
 - Poczekaj przy pierwszym uruchomieniu (może potrwać kilka minut).
 - Na pulpicie wybierz „Zezwól na uruchamianie” (jeśli wymagane).
 - Sprawdź log: `~/.local/state/LinAmp/launch.log`.
 
 **Błędy o brakujących bibliotekach Qt na Linuksie**
 Na minimalnych instalacjach mogą być potrzebne biblioteki systemowe, np.:
-
 - Fedora: `sudo dnf install krb5-libs pcsc-lite-libs keyutils-libs openssl-libs`
 - Ubuntu/Debian: `sudo apt install libkrb5-3 libpcsclite1 libkeyutils1 libssl3`
 
 **Muzyka się zacina**
-
 - Zamknij inne obciążające programy i sprawdź, czy plik nie jest uszkodzony.
 - Spróbuj wyłączyć korektor, aby porównać działanie.
 
