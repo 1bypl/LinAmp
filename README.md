@@ -1,296 +1,127 @@
-# LinAmp 🎵
+# LinAmp
 
-Nowoczesny odtwarzacz muzyczny inspirowany Winampem — z **darmowym radiem
-internetowym**, korektorem, nagrywaniem stacji i obsługą wielu formatów.
-Działa na **Linuksie** i **Windowsie**.
+LinAmp to prosty odtwarzacz muzyki i radia internetowego dla systemu Linux i Windows. Wyglądem i obsługą nawiązuje do klasycznych odtwarzaczy, a do działania wykorzystuje Pythona i biblioteki PySide6 (Qt), Qt Multimedia/FFmpeg, mutagen i numpy.
 
-Interfejs jest dostępny w językach: **polski (domyślny), angielski, niemiecki,
-francuski, hiszpański i rosyjski**.
+## Najważniejsze możliwości
 
-![Okno główne LinAmp](https://github.com/1bypl/LinAmp/blob/main/okno-glowne.png)
+- **Odtwarzanie muzyki**: MP3, FLAC, OGG/Opus, WAV, M4A/AAC, WMA, APE, WavPack, AIFF i inne formaty obsługiwane przez Qt Multimedia/FFmpeg.
+- **Tryby odtwarzania** (jeden przycisk/menu, zapamiętywany):
+  - **Po kolei** — odtwarza utwory w widocznej kolejności i zatrzymuje się po ostatnim,
+  - **W pętli** — odtwarza całą listę w kółko,
+  - **Losowo** — tasuje kolejność odtwarzania i gra dalej losowo.
+- **Playlista**: dodawanie plików i folderów (także przeciągnij i upuść), wyszukiwanie, sortowanie kolumn, zapamiętywanie stanu, przycisk **„Wyczyść listę”**. Kolejność odtwarzania w trybach nielosowych uwzględnia aktualne sortowanie/widok listy.
+- **Informacje o utworach** na liście: tytuł, wykonawca, album, **rok/data**, czas, **kodek** i **bitrate** (uzupełniane po odczycie metadanych). Aktualnie odtwarzany utwór jest wyraźnie podświetlany na zielono.
+- **Playlisty**: wczytywanie i zapisywanie w formatach **M3U / M3U8 / PLS**.
+- **Radio internetowe**: darmowe stacje z katalogu SHOUTcast (bez rejestracji i bez klucza API), ulubione stacje, informacja o aktualnie granej piosence.
+- **Nagrywanie radia**: zapis do pliku (WAV; jeśli FFmpeg jest dostępny — także konwersja do MP3/M4A).
+- **Korektor graficzny 10 pasm** (31 Hz – 16 kHz), presety i regulacja preamp.
+- **Analizator widma**.
+- **Okładki**: osadzone w plikach i znalezione w folderze utworu/albumu (także w folderach nadrzędnych, np. przy podfolderach `CD1`/`Volume 1`); gdy lokalna okładka jest niedostępna, LinAmp próbuje pobrać ją z internetu na podstawie metadanych (wymagane połączenie sieciowe).
+- **4 skórki wyglądu**: Ciemna, Jasna, Niebieska i Bursztynowa (**Widok → Wygląd**).
+- **6 języków interfejsu**: polski, angielski, niemiecki, francuski, hiszpański i rosyjski (**Narzędzia → Język**).
+- **Wygoda**: ikona w zasobniku systemowym, skróty klawiszowe i multimedialne, zapamiętywanie głośności, trybu odtwarzania, pozycji okna i listy.
 
-## Najważniejsze funkcje
+## Pobieranie i instalacja
 
-- **Odtwarzanie muzyki:** MP3, FLAC, OGG/Opus, WAV, M4A/AAC, WMA i inne formaty
-  obsługiwane przez FFmpeg.
-- **Playlista:** filtrowanie, sortowanie, przewijanie, losowe odtwarzanie,
-  powtarzanie, wczytywanie i zapis **M3U/M3U8 oraz PLS**.
-- **Korektor graficzny (10 pasm):** presety (np. Rock, Pop, Bas, Wokal,
-  Klasyczny, Elektroniczny) i własne ustawienia, działa dla muzyki i radia.
-- **Radio internetowe SHOUTcast:** darmowy katalog (bez rejestracji i klucza
-  API), kategorie, wyszukiwanie, ulubione stacje, podgląd aktualnie granej
-  piosenki oraz **nagrywanie stacji**.
-- **Analizator widma (FFT)** reagujący na odtwarzany dźwięk.
-- **Okładki i tagi:** tytuł, wykonawca, album i czas trwania.
-- **Zasobnik systemowy**, skróty klawiszowe i obsługa klawiszy multimedialnych.
-- **Przeciąganie i upuszczanie** plików/folderów na okno programu.
+W katalogu `dist/` dostępne są pakiety dla wersji **1.2.0** (z aktualnymi poprawkami odtwarzania, kolejki i sortowania):
 
-![Okno radia](https://github.com/1bypl/LinAmp/blob/main/radio.png)
+| Plik | System | Opis |
+|---|---|---|
+| `LinAmp-1.2.0-amd64.deb` | Debian / Ubuntu / Linux Mint | Pakiet `.deb` (amd64). Instaluje program w `/opt/linamp`, dodaje skrót w menu i ikonę. |
+| `LinAmp.spec` | Fedora / RHEL / openSUSE | Plik spec do zbudowania pakietu `.rpm` (instrukcja poniżej). |
+| `LinAmp-1.2.0-x86_64.AppImage` | Linux (uniwersalny) | Przenośny AppImage, bez instalacji. *Uwaga: może wymagać przebudowania, aby zawierać najnowsze poprawki ze źródeł.* |
+| `LinAmp-1.2.0-linux-portable.tar.gz` | Linux | Wersja przenośna (źródła + skrypty uruchomieniowe). |
+| `LinAmp-1.2.0-windows-portable.zip` | Windows | Wersja przenośna dla Windows (instrukcja poniżej). |
 
----
+> **Uwaga o formatach:** w tym środowisku nie było narzędzi do zbudowania binarnego `.rpm` (`rpmbuild`) ani natywnego instalatora `.exe` dla Windows — dla Fedory/RHEL dostarczony jest `.spec` i paczka przenośna, dla Windows paczka `.zip` z `run.bat`. Instalator `.exe` można przygotować na Windows (np. PyInstaller + Inno Setup).
 
-## Instalacja i uruchamianie na Linuksie
-
-### Opcja 1: AppImage (najprostsza, bez instalacji Pythona)
-
-1. Pobierz/skopiuj plik:
-   `dist/LinAmp-1.2.0-x86_64.AppImage`
-2. Nadaj prawo uruchamiania (jeśli potrzeba):
-   ```bash
-   chmod +x LinAmp-1.2.0-x86_64.AppImage
-   ```
-3. Uruchom:
-   ```bash
-   ./LinAmp-1.2.0-x86_64.AppImage
-   ```
-
-Jeśli system nie obsługuje FUSE/AppImage:
-```bash
-./LinAmp-1.2.0-x86_64.AppImage --appimage-extract-and-run
-```
-
-AppImage zawiera LinAmp oraz potrzebne biblioteki (Python, PySide6, numpy,
-mutagen) i jest przeznaczony dla systemów Linux **x86_64**.
-Pobierz dla Linux [Appimage](https://drive.proton.me/urls/DP73J5QMM0#aA2Skb5p5uVQ)
-### Opcja 2: Uruchomienie z folderu projektu (`run.sh`)
-
-Potrzebujesz Pythona 3.10 lub nowszego.
-
-1. Otwórz terminal w folderze z projektem.
-2. Uruchom:
-   ```bash
-   ./run.sh
-   ```
-   Przy **pierwszym uruchomieniu** skrypt utworzy środowisko wirtualne i
-   zainstaluje biblioteki (potrzebny internet, może potrwać kilka minut).
-3. Kolejne uruchomienia są szybkie:
-   ```bash
-   ./run.sh
-   ```
-
-Jeśli środowisko Pythona było utworzone w innym systemie (np. wcześniej
-w piaskownicy), `run.sh` wykryje to i sam je przebuduje.
-
-### Skrót w menu aplikacji (opcjonalnie)
+### Debian / Ubuntu (.deb)
 
 ```bash
-./install-linux.sh
+sudo apt install ./dist/LinAmp-1.2.0-amd64.deb
 ```
 
-Skrypt nie wymaga uprawnień administratora i dodaje LinAmp do menu „Dźwięk i
-wideo” oraz (jeśli istnieje folder `Pulpit`/`Desktop`) skrót na pulpicie.
+Zależności: `python3 (>= 3.10)`, `python3-venv`, `python3-pip`, `ffmpeg`. Przy pierwszym uruchomieniu program utworzy środowisko i doinstaluje biblioteki Pythona (wymagane połączenie z internetem).
 
-**Pierwsze uruchomienie z ikony może potrwać kilka minut**, jeśli środowisko
-jest przygotowywane. Jeśli skrót na pulpicie nie reaguje, wybierz „Zezwól na
-uruchamianie” (KDE/GNOME) lub użyj wpisu w menu aplikacji.
+### Fedora / RHEL (.rpm)
 
-### Gdy `./run.sh` nie chce się uruchomić
+Zbuduj pakiet z `dist/LinAmp.spec` na systemie z `rpmbuild` (używając źródeł/paczki zgodnie z sekcją `%install`), np. `rpmbuild -bb dist/LinAmp.spec`. Alternatywnie użyj wersji przenośnej: rozpakuj `LinAmp-1.2.0-linux-portable.tar.gz` i uruchom `./run.sh`.
 
-Nadaj prawa wykonywania:
+### Linux — AppImage
+
 ```bash
-chmod +x run.sh install-linux.sh
+chmod +x dist/LinAmp-1.2.0-x86_64.AppImage
+./dist/LinAmp-1.2.0-x86_64.AppImage
 ```
 
-Jeśli brakuje `venv`/`ensurepip`:
-- Ubuntu/Debian: `sudo apt install python3-venv`
-- Fedora: `sudo dnf install python3-pip`
+Nie wymaga instalacji. Jeśli chcesz mieć pewność najnowszych poprawek ze źródeł, użyj przebudowanego AppImage lub paczki `.deb`/przenośnej.
 
-Szczegóły błędów uruchamiania: `~/.local/state/LinAmp/launch.log`.
+### Windows — paczka przenośna (.zip)
 
----
+1. Zainstaluj **Python 3.10 lub nowszy**: https://www.python.org/downloads/ (zaznacz **„Add Python to PATH”**).
+2. Rozpakuj `dist/LinAmp-1.2.0-windows-portable.zip` (np. `C:\Programy\LinAmp`).
+3. Uruchom **`run.bat`** — przy pierwszym uruchomieniu powstanie `.venv` i zostaną pobrane biblioteki (wymagane połączenie z internetem).
+4. (Opcjonalnie) utwórz skrót do `run.bat`.
 
-## Instalacja i uruchamianie na Windowsie
+Aby nagrywać radio do MP3/M4A, zainstaluj **FFmpeg** i dodaj go do `PATH` (bez FFmpeg nagrania są w WAV).
 
-1. Zainstaluj Pythona ze strony <https://www.python.org/downloads/>.
-   W instalatorze **zaznacz „Add python.exe to PATH”**.
-2. Otwórz folder z projektem.
-3. Uruchom **`run.bat`**.
+### Uruchomienie ze źródeł (Linux)
 
-Przy pierwszym uruchomieniu program pobierze biblioteki. Jeśli Windows pokaże
-„Windows protected your PC”, wybierz **More info → Run anyway**.
+```bash
+./run.sh
+```
 
----
+Skrypt tworzy/naprawia środowisko `.venv` i uruchamia `python -m linamp`. Można podać pliki/foldery jako argumenty, np. `./run.sh ~/Muzyka`.
 
-## Jak korzystać
+## Obsługa
 
-### Dodawanie muzyki
+### Tryby odtwarzania i kolejka
+- **Po kolei** — gra w kolejności widocznej na liście i zatrzymuje się na końcu.
+- **W pętli** — powtarza całą listę.
+- **Losowo** — losowa kolejność utworów.
+- Przełączanie: przycisk trybu lub menu **Odtwarzanie**. Skróty: `R` (następny tryb), `S` (losowo), `L` (w pętli), `Shift+L` (po kolei).
+- Sortowanie listy (klik w nagłówek kolumny) wpływa na kolejność odtwarzania w trybach nielosowych.
 
-- **Dodaj pliki:** przycisk `+` lub `Ctrl+O`.
-- **Dodaj folder:** przycisk folderu lub `Ctrl+Shift+O`.
-- Możesz też **przeciągnąć pliki/foldery** na okno programu.
+### Playlista i pliki
+- Dodawanie: `Ctrl+O` (pliki), `Ctrl+Shift+O` (folder), przeciągnij i upuść.
+- Wczytaj/zapisz playlistę **M3U/M3U8/PLS**: `Ctrl+L` / `Ctrl+S`.
+- **Wyczyść listę** — przycisk na pasku playlisty (z potwierdzeniem). `Delete` usuwa zaznaczone.
+- Filtruj: `F`. Kolumny: tytuł, wykonawca, album, rok/data, czas, kodek, bitrate.
 
-### Odtwarzanie
+### Radio, korektor, wygląd
+- **Radio internetowe**: `Ctrl+R`, ulubione: `Ctrl+Shift+R`; nagrywanie w oknie radia (WAV/MP3/M4A z FFmpeg).
+- **Korektor graficzny**: `Ctrl+E` (10 pasm, presety, preamp).
+- **Skórki**: **Widok → Wygląd** (Ciemna/Jasna/Niebieska/Bursztynowa), restart po zmianie.
+- **Język**: **Narzędzia → Język** (PL/EN/DE/FR/ES/RU), restart po zmianie.
 
-- Podwójne kliknięcie utworu lub `Enter` — odtwórz.
-- `Space` (albo duży zielony przycisk) — odtwórz/pauza.
-- `Z` / `B` — poprzedni / następny utwór.
-- `V` — stop.
-- `←` / `→` — przewiń o 5 s, `Shift + ←` / `→` — o 30 s.
-- `↑` / `↓` — głośność, `M` — wyciszenie.
-- `S` — losowo, `R` — powtarzanie.
+### Skróty klawiszowe (najważniejsze)
+- `Spacja` / `X` / `C` / `V` – odtwórz/pauza, odtwórz, pauza, stop
+- `Z` / `B` – poprzedni / następny utwór
+- `←` / `→` – przewiń 5 s, `Shift+←/→` – 30 s
+- `↑` / `↓` – głośniej/ciszej, `M` – wycisz
+- `R` – zmień tryb odtwarzania, `S` – losowo, `L` – w pętli, `Shift+L` – po kolei
+- `F` – filtruj, `Delete` – usuń zaznaczone
+- `Ctrl+O` / `Ctrl+Shift+O` – dodaj pliki / folder
+- `Ctrl+L` / `Ctrl+S` – wczytaj / zapisz playlistę (M3U/PLS)
+- `Ctrl+R` / `Ctrl+Shift+R` – radio / ulubione stacje
+- `Ctrl+E` – korektor, `F8` – pokaż/ukryj playlistę, `F1` – pomoc
 
-### Playlista (M3U/M3U8/PLS)
+## Gdzie zapisywane są dane
 
-- `Ctrl+S` — zapisz playlistę (wybierz format **M3U/M3U8** lub **PLS**).
-- `Ctrl+L` — wczytaj playlistę.
-- `F` — filtruj utwory, `Delete` — usuń zaznaczone z playlisty.
-- Kliknięcie nagłówka kolumny sortuje listę.
-
-### Korektor graficzny
-
-- `Ctrl+E` lub **Narzędzia → Korektor…**.
-- Włącz korektor, wybierz preset lub ustaw własne pasma (31 Hz–16 kHz) i preamp.
-- Ustawienia są zapisywane i działają dla plików oraz radia.
-
-### Radio internetowe
-
-1. Kliknij **Radio** (`Ctrl+R`).
-2. Wybierz kategorię (np. Rock, Jazz, Dance) lub **★ Ulubione** (`Ctrl+Shift+R`).
-3. Dwukrotnie kliknij stację, aby odtworzyć.
-4. Gwiazdka **☆/★** dodaje/usuwa stację z ulubionych.
-5. Wyszukiwarka filtruje po nazwie, gatunku i aktualnej piosence.
-6. **Nagrywanie:** odtwórz stację, kliknij **Nagraj**, a potem **Zatrzymaj nagrywanie**.
-
-Podczas słuchania radia zamiast czasu widoczny jest napis **NA ŻYWO**, a
-przewijanie jest wyłączone. Tytuł piosenki odświeża się automatycznie, gdy
-stacja go udostępnia.
-
-**Nagrania:** domyślnie zapisywane w folderze muzyki użytkownika w podfolderze
-`LinAmp` (np. `Muzyka/LinAmp/Nagrania radiowe`). Jeśli w systemie jest dostępny
-`ffmpeg`, nagranie zostanie zapisane jako MP3 (lub M4A); w przeciwnym razie jako
-WAV. Radio wymaga połączenia z internetem. Lista stacji pochodzi z katalogu
-[SHOUTcast](https://directory.shoutcast.com/).
-
-### Język interfejsu
-
-**Narzędzia → Język**: polski, angielski, niemiecki, francuski, hiszpański,
-rosyjski. Po zmianie języka program uruchomi się ponownie, aby zastosować nowe
-napisy.
-
----
-Pobierz dla Linux [Appimage](https://drive.proton.me/urls/DP73J5QMM0#aA2Skb5p5uVQ)
-## Skróty klawiszowe
-
-| Klawisz | Działanie |
-|---|---|
-| `Space` | Odtwórz / pauza |
-| `X` / `C` | Odtwórz / pauza (klasycznie, jak w Winampie) |
-| `Z` / `B` | Poprzedni / następny utwór |
-| `V` | Stop |
-| `←` / `→` | Przewiń o 5 sekund |
-| `Shift + ←` / `→` | Przewiń o 30 sekund |
-| `↑` / `↓` | Głośność ±5% |
-| `M` | Wycisz / włącz dźwięk |
-| `S` | Tryb losowy |
-| `R` | Tryb powtarzania |
-| `F` | Filtruj playlistę |
-| `Enter` | Odtwórz zaznaczony utwór |
-| `Delete` | Usuń zaznaczone z playlisty |
-| `Ctrl + O` | Otwórz pliki |
-| `Ctrl + Shift + O` | Dodaj cały folder |
-| `Ctrl + L` | Wczytaj playlistę (M3U/PLS) |
-| `Ctrl + S` | Zapisz playlistę (M3U/PLS) |
-| `Ctrl + R` | Otwórz radio internetowe |
-| `Ctrl + Shift + R` | Otwórz ulubione stacje radiowe |
-| `Ctrl + E` | Korektor graficzny |
-| `F8` | Pokaż / ukryj playlistę |
-| `F1` | Pomoc ze skrótami |
-| `Ctrl + Q` | Zamknij program |
-
----
-
-## Gdzie zapisywane są ustawienia
-
-- **Linux:** `~/.config/LinAmp/state.json`
-- **Windows:** `%APPDATA%\LinAmp\state.json`
-
-Zapisywane są m.in. głośność, tryby odtwarzania, playlista, pozycja okna,
-ulubione stacje radiowe, język, ustawienia korektora i folder nagrań. Plik można
-usunąć — program utworzy nowy z wartościami domyślnymi. Ustawienia ze starej
-nazwy `PyAmp` są migrowane automatycznie.
-
----
+- **Ustawienia i stan**: `~/.config/LinAmp/state.json` (Linux) lub `%APPDATA%\LinAmp\state.json` (Windows). Starsza konfiguracja `PyAmp` jest migrowana automatycznie.
+- **Nagrania radiowe** (domyślnie): katalog Muzyka → `LinAmp/Nagrania radiowe`.
+- **Log uruchamiania** (Linux, `run.sh`): `~/.local/state/LinAmp/launch.log`.
 
 ## Rozwiązywanie problemów
 
-**Brak dźwięku**
-- Sprawdź głośność w programie i w systemie.
-- Naciśnij `M`, aby sprawdzić, czy dźwięk nie jest wyciszony.
-- Na Linuksie sprawdź wybrane urządzenie wyjściowe w ustawieniach dźwięku.
+- **Brak dźwięku / format nie działa**: zainstaluj kodeki obsługiwane przez Qt Multimedia (np. GStreamer/FFmpeg).
+- **Nagrywanie do MP3/M4A niedostępne**: zainstaluj `ffmpeg` (bez niego nagrania są w WAV).
+- **Korektor niedostępny**: zależy od backendu audio Qt na danym systemie.
+- **Brak okładki**: wyświetlane są okładki osadzone i z plików w folderze/albumie; przy ich braku LinAmp próbuje pobrać okładkę z internetu (wymaga sieci i poprawnych metadanych).
+- **Zmiana języka/skórki niewidoczna od razu**: po potwierdzeniu program uruchamia się ponownie.
+- **Radio nie łączy się**: sprawdź internet; wybrane strumienie mogą być chwilowo niedostępne.
 
-**Radio się nie łączy lub nie gra**
-- Sprawdź połączenie z internetem i kliknij **Odśwież**.
-- Niektóre stacje bywają chwilowo niedostępne — spróbuj innej.
+## Uwagi
 
-**Nagrywanie zapisuje WAV zamiast MP3**
-- Zainstaluj `ffmpeg` w systemie (Linux: np. `sudo apt install ffmpeg` /
-  `sudo dnf install ffmpeg`; Windows: dodaj `ffmpeg` do PATH). Bez FFmpeg
-  nagranie jest zapisywane jako WAV.
-
-**Korektor niedostępny**
-- Korektor wymaga działającego urządzenia wyjściowego audio w systemie. Jeśli
-  nie można go włączyć, odtwarzanie będzie działać normalnie bez korektora.
-
-**Ikona w menu lub na pulpicie nie uruchamia programu (Linux)**
-- Poczekaj przy pierwszym uruchomieniu (może potrwać kilka minut).
-- Na pulpicie wybierz „Zezwól na uruchamianie” (jeśli wymagane).
-- Sprawdź log: `~/.local/state/LinAmp/launch.log`.
-
-**Błędy o brakujących bibliotekach Qt na Linuksie**
-Na minimalnych instalacjach mogą być potrzebne biblioteki systemowe, np.:
-- Fedora: `sudo dnf install krb5-libs pcsc-lite-libs keyutils-libs openssl-libs`
-- Ubuntu/Debian: `sudo apt install libkrb5-3 libpcsclite1 libkeyutils1 libssl3`
-
-**Muzyka się zacina**
-- Zamknij inne obciążające programy i sprawdź, czy plik nie jest uszkodzony.
-- Spróbuj wyłączyć korektor, aby porównać działanie.
-
----
-
-## Struktura projektu
-
-```text
-linamp/
-  __init__.py          nazwa i wersja aplikacji
-  __main__.py          uruchamianie modułu (python -m linamp)
-  app.py               punkt startowy
-  audio.py             silnik odtwarzania i buforowanie próbek audio
-  audioutil.py         konwersje próbek PCM (korektor, nagrywanie)
-  config.py            zapis/odczyt ustawień JSON
-  equalizer.py         10-pasmowy korektor graficzny
-  i18n.py              tłumaczenia interfejsu (PL/EN/DE/FR/ES/RU)
-  metadata.py          tagi, okładki, skanowanie folderów
-  playlist.py          model playlisty, filtrowanie, M3U/PLS
-  radio.py             katalog SHOUTcast i zadania sieciowe w tle
-  recorder.py          nagrywanie radia (WAV + opcjonalna konwersja FFmpeg)
-  theme.py             kolory i styl ciemnego interfejsu
-  ui/
-    main_window.py     główne okno i logika
-    radio_window.py    okno radia (kategorie, ulubione, nagrywanie)
-    equalizer_window.py  okno korektora
-    controller.py      kolejność utworów, losowo, powtarzanie
-    widgets.py         przyciski, suwaki, okładka
-    spectrum.py        analizator widma
-    icons.py           wektorowe ikony
-    dialogs.py         pomoc i „O programie”
-    workers.py         zadania w tle (metadane, okładki)
-run.sh                 uruchamianie na Linuksie
-run.bat                uruchamianie na Windowsie
-install-linux.sh       skrót w menu Linuksa
-dist/                  gotowe paczki (np. AppImage)
-docs/                  zrzuty ekranu i ikona
-requirements.txt       biblioteki Pythona
-```
-
----
-
-## Informacje techniczne
-
-- Python 3.10+ i PySide6 (Qt 6) — jeden kod dla Linuksa i Windowsa.
-- Odtwarzanie i dekodowanie: FFmpeg dołączony do PySide6.
-- Tagi i okładki: mutagen.
-- Widmo i przetwarzanie korektora: numpy (FFT).
-- Radio: publiczne endpointy katalogu SHOUTcast, zapytania w tle (`QThreadPool`).
-- Wersja: 1.2.0.
-
-Miłego słuchania! 🎧
+- Paczka `.deb` instaluje program do `/opt/linamp` i przy pierwszym uruchomieniu może doinstalować zależności Pythona (venv/pip) — wymagane połączenie z internetem.
+- Planowane dalej: m.in. rozszerzenia obsługi playlist (np. `.cue`) i kolejne ulepszenia metadanych.
