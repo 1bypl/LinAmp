@@ -51,7 +51,7 @@ Jeśli system nie obsługuje FUSE/AppImage:
 
 AppImage zawiera LinAmp oraz potrzebne biblioteki (Python, PySide6, numpy,
 mutagen) i jest przeznaczony dla systemów Linux **x86_64**.
-
+Pobierz dla Linux [Appimage](https://drive.proton.me/urls/DP73J5QMM0#aA2Skb5p5uVQ)
 ### Opcja 2: Uruchomienie z folderu projektu (`run.sh`)
 
 Potrzebujesz Pythona 3.10 lub nowszego.
