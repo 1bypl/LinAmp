@@ -74,6 +74,9 @@ Aby nagrywać radio do MP3/M4A, zainstaluj **FFmpeg** i dodaj go do `PATH` (bez 
 Skrypt tworzy/naprawia środowisko `.venv` i uruchamia `python -m linamp`. Można podać pliki/foldery jako argumenty, np. `./run.sh ~/Muzyka`.
 
 **Pełny projekt z najnowszymi aktualizacjami odtwarzacza LinAmp 1.2.0 wraz z plikami instalacyjnymi pobierzesz z Proton**: (https://drive.proton.me/urls/G3ATX7TDTR#WLDunQbdDtUU)
+
+Pobierz instalator dla Windows LinAmp 1.2.0.exe: (https://drive.proton.me/urls/2ZQNTHAE4G#A6YyNJ1txd3v)
+
 ## Obsługa
 
 ### Tryby odtwarzania i kolejka
